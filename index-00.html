@@ -1,0 +1,227 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>słownik</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--<link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="main.js"></script>-->
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+      }
+      .canvas {
+        border: 1px solid black;
+        width: 200px;
+        height: 200px;
+        position: relative;
+      }
+      .circle {
+        position: absolute;
+        left: calc((var(--x) + var(--stroke-width)/2 - var(--r)) * 1px);
+        top: calc((var(--y) + var(--stroke-width)/2 - var(--r)) * 1px);
+        width: calc((var(--r)) * 2px);
+        height: calc((var(--r)) * 2px);
+        border-radius: 50%;
+        background-color: var(--c);
+        transform-origin: calc(var(--r) * 1px) calc(var(--r) * 1px);
+      }
+      .circle::after {
+        position: absolute;
+        content: "";
+        width: calc((var(--dot-size)) * 1px);
+        height: calc((var(--dot-size)) * 1px);
+        left: calc((var(--r) - var(--dot-size)/2) * 1px);
+        top: calc((var(--r) - var(--dot-size)/2)  * 1px);
+        border-radius:100%;
+        background-color: red;
+      }
+      .stroke {
+        position: absolute;
+        left: calc((var(--x)) * 1px);
+        top: calc((var(--y)) * 1px);
+        width: calc(var(--stroke-width)*1px);
+        height: calc((var(--lenght) + var(--stroke-width)) * 1px);
+        border-radius: calc(var(--stroke-width) /2 *1px);
+        background-color: var(--c);
+        transform-origin: calc(var(--stroke-width) / 2 * 1px) calc(var(--stroke-width) / 2 * 1px);
+      }
+      .stroke::after {
+        position: absolute;
+        content: "";
+        width: calc((var(--dot-size)) * 1px);
+        height: calc((var(--dot-size)) * 1px);
+        left: calc((var(--stroke-width) - var(--dot-size)) /2 * 1px);
+        top: calc((var(--stroke-width) - var(--dot-size)) /2 * 1px);
+        border-radius:100%;
+        background-color: red;
+      }
+
+      .a1 {
+        .torso {
+          left: 80px;
+          top: 70px;
+        }
+        .leg1-left {
+          left: 80px;
+          top: 110px;
+          height: 30px;
+          transform-origin: 5px 5px;
+          transform: rotate(-25deg);
+        }
+        .leg1-right {
+          left: 80px;
+          top: 110px;
+          height: 30px;
+          transform-origin: 5px 5px;
+          transform: rotate(25deg);
+        }
+        .leg2-left {
+          left: 90px;
+          top: 132px;
+          height: 30px;
+          transform-origin: 5px 5px;
+          transform: rotate(0deg);
+        }
+        .leg2-right {
+          left: 70px;
+          top: 132px;
+          height: 30px;
+          transform-origin: 5px 5px;
+          transform: rotate(0deg);
+        }
+      }
+
+      .a2 {
+        --stroke-width: 10;
+        --dot-size: 4;
+
+        .torso {
+          --lenght: 40;
+          --x: 80;
+          --y: 70;
+          --c: hsla(130,50%,50%,100%);
+        }
+        .neck {
+          --lenght: 25;
+          --x: 0;
+          --y: 0;
+          transform: rotate(-180deg);
+        }
+        .head {
+          --x: 0;
+          --y: 25;
+          --r: 20;
+        }
+        .leg1-left {
+          --x: 0;
+          --y: 40;
+          --lenght: 20;
+          transform: rotate(-25deg);
+
+        }
+        .leg2-left {
+          --x: 0;
+          --y: 20;
+          --lenght: 20;
+          transform: rotate(25deg);
+        }
+        .leg3-left {
+          --x: 0;
+          --y: 20;
+          --lenght: 2;
+          transform: rotate(-90deg);
+        }
+
+        .leg1-right {
+          --x: 0;
+          --y: 40;
+          --lenght: 20;
+          transform: rotate(25deg);
+        }
+        
+        .leg2-right {
+          --x: 0;
+          --y: 20;
+          --lenght: 20;
+          transform: rotate(-25deg);
+        }
+        
+        .leg3-right {
+          --x: 0;
+          --y: 20;
+          --lenght: 2;
+          transform: rotate(90deg);
+        }
+        
+        .arm1-left {
+          --x: 0;
+          --y: 0;
+          --lenght: 20;
+          transform: rotate(-35deg);
+        }
+        .arm1-right {
+          --x: 0;
+          --y: 0;
+          --lenght: 20;
+          transform: rotate(35deg);
+        }
+        .arm2-left {
+          --x: 0;
+          --y: 20;
+          --lenght: 20;
+          transform: rotate(25deg);
+        }
+        .arm2-right {
+          --x: 0;
+          --y: 20;
+          --lenght: 20;
+          transform: rotate(-25deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="canvas a1">
+      <div class="stroke torso"></div>
+      <div class="stroke leg1-left"></div>
+      <div class="stroke leg1-right"></div>
+      <div class="stroke leg2-left"></div>
+      <div class="stroke leg2-right"></div>
+    </div>
+    <div class="canvas a2">
+      <div class="stroke torso">
+
+        <div class="stroke leg1-left">
+          <div class="stroke leg2-left">
+            <div class="stroke leg3-left"></div>
+          </div>
+        </div>
+        
+        <div class="stroke leg1-right">
+          <div class="stroke leg2-right">
+            <div class="stroke leg3-right"></div>
+          </div>
+        </div>
+
+        <div class="stroke arm1-left">
+          <div class="stroke arm2-left">
+          </div>
+        </div>
+
+        <div class="stroke arm1-right">
+          <div class="stroke arm2-right">
+          </div>
+        </div>
+
+        <div class="stroke neck">
+          <div class="circle head"></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

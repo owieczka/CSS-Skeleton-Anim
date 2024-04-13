@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Animation Sync Test</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--<link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="main.js"></script>-->
+    <style>
+      body {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 2rem;
+      }
+      .canvas {
+        border: 1px solid black;
+        width: 200px;
+        height: 200px;
+        position: relative;
+      }
+      .rect {
+        position: absolute;
+        left: calc(var(--x) * 1px);
+        top: calc(var(--y) * 1px);
+        width: calc(var(--w) * 1px);
+        height: calc(var(--h) * 1px);
+        background-color: var(--c);
+      }
+      
+      .a {
+        animation: jump 1s linear 0s infinite both;
+      }
+
+      .b {
+        animation: jump 2s linear 0s infinite both;
+      }
+      
+      /*
+      @property --y {syntax: '<number>'; initial-value: 0; inherits: true;}
+      */
+      @keyframes jump {
+        0% {
+          --y: 20;
+        }
+
+        50% {
+          --y: 100;
+        }
+      
+        100% {
+          --y: 20;
+        }
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="canvas">
+      <div class="rect a" style="--x: 10;--y: 20; --w: 20; --h:20; --c: red;"></div>
+      <div class="rect b" style="--x: 50;--y: 20; --w: 20; --h:20; --c: green;"></div>
+
+      <div class="rect b" style="--x: 90;--y: 20; --w: 20; --h:20; --c: hsla(179, 75%, 50%, 0.356);">
+        <div class="rect a" style="--x: 10;--y: 20; --w: 20; --h:20; --c: rgba(150, 252, 154, 0.444);">
+        </div>
+      </div>
+
+    </div>
+  </body>
+</html>
