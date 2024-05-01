@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!--<link rel="stylesheet" type="text/css" media="screen" href="main.css" />
     <script src="main.js"></script>-->
+    <!--https://codepen.io/owcakw/pen/NWmObWP-->
     <style>
       body {
         display: flex;
@@ -15,16 +16,31 @@
         justify-content: center;
         gap: 2rem;
       }
+
+      .canvas .canvas {
+        border: 0px solid black;
+      }
+
       .canvas {
         border: 1px solid black;
         width: 200px;
         height: 200px;
         position: relative;
       }
+      .canvas-absolute {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        opacity: 0.3;
+      }
+      .caption {
+        width: 100%;
+        text-align: center;
+      }
       .circle {
         position: absolute;
         left: calc((var(--x) + var(--stroke-width)/2 - var(--r)) * 1px);
-        top: calc((var(--y) + var(--stroke-width)/2 - var(--r)) * 1px);
+        top: calc((var(--y) + var(--stroke-width) - var(--r)) * 1px);
         width: calc((var(--r)) * 2px);
         height: calc((var(--r)) * 2px);
         border-radius: 50%;
@@ -66,14 +82,14 @@
         position: absolute;;
         left: calc((var(--pos-x)) * 1px);
         top: calc((var(--pos-y)) * 1px);
-        width:10px;
-        height:10px;
-        outline: 1px solid red;
+        width:2px;
+        height:2px;
+        outline: 1px solid black;
       }
 
       .torso {
         --lenght: 40;
-        --x: var(--torse-x);
+        --x: calc(var(--torse-x) - var(--stroke-width)/2);
         --y: var(--torse-y);
         --c: hsla(130,50%,50%,100%);
         transform: rotate(calc(var(--torse-angle) * 1deg));
@@ -163,8 +179,8 @@
       .front {
         --stroke-width: 10;
         --dot-size: 4;
-        --torse-x: 90;
-        --torse-y: 110;
+        --torse-x: 0;
+        --torse-y: 115;
         --torse-angle: 0;
         --head-angle: -180;
         --arm-l1-angle: -35;
@@ -200,10 +216,10 @@
       @property --leg-r2-angle {syntax: '<number>'; initial-value: 0; inherits: true;}
       @property --leg-r3-angle {syntax: '<number>'; initial-value: 0; inherits: true;}
       
-      @keyframes walk {
+      @keyframes walk-cycle {
         0% {
           --torse-x: 0;
-          --torse-y: 110;
+          --torse-y: 115;
           --torse-angle: 0;
           --head-angle: -180;
           --arm-l1-angle: 45;
@@ -218,8 +234,8 @@
           --leg-r3-angle: -90;
         }
         25% {
-          --torse-x: 5;
-          --torse-y: 115;
+          --torse-x: 7;
+          --torse-y: 119;
           --torse-angle: 0;
           --head-angle: -180;
           --arm-l1-angle: 65;
@@ -234,7 +250,7 @@
           --leg-r3-angle: -90;
         }
         50% {
-          --torse-x: 15;
+          --torse-x: 23;
           --torse-y: 110;
           --torse-angle: 0;
           --head-angle: -180;
@@ -250,8 +266,8 @@
           --leg-r3-angle: -90;
         }
         75% {
-          --torse-x: 20;
-          --torse-y: 108;
+          --torse-x: 37;
+          --torse-y: 112;
           --torse-angle: 0;
           --head-angle: -180;
           --arm-l1-angle: -40;
@@ -265,25 +281,9 @@
           --leg-r2-angle: +85;
           --leg-r3-angle: -90;
         }
-        /*80% {
-          --torse-x: 30;
-          --torse-y: 110;
-          --torse-angle: 0;
-          --head-angle: -180;
-          --arm-l1-angle: -50;
-          --arm-l2-angle: -65;
-          --arm-r1-angle: 55;
-          --arm-r2-angle: -40;
-          --leg-l1-angle: +20;
-          --leg-l2-angle:  20;
-          --leg-l3-angle: -90;
-          --leg-r1-angle: -45;
-          --leg-r2-angle: 0;
-          --leg-r3-angle: -90;
-        }*/
         100% {
-          --torse-x: 30;
-          --torse-y: 110;
+          --torse-x: 45;
+          --torse-y: 115;
           --torse-angle: 0;
           --head-angle: -180;
           --arm-r1-angle: 45;
@@ -299,73 +299,61 @@
         }
       }
 
-      @keyframes walk2 { /* 5 step*/
-        0% {
-          --pos-x: 0;
-        }
-        20% {
-          --pos-x: 30;
-        }
-        40% {
-          --pos-x: 60;
-        }
-        60% {
-          --pos-x: 90;
-        }
-        80% {
-          --pos-x: 120;
-        }
-        100% {
-          --pos-x: 150;
-        }
-      }
-
       @keyframes walk3 { /* n step*/
         0% {
           --pos-x: 0;
+          --pos-y: 0;
         }
         100% {
-          --pos-x: calc(30 * var(--walk-steps));
+          --pos-x: calc(45 * var(--walk-steps));
+          --pos-y: 0;
         }
       }
-
-      .a2 {
+      .frame-all {
         --stroke-width: 10;
         --dot-size: 4;
-        --torse-x: 0;
-        --torse-y: 110;
-        --torse-angle: 0;
-        --head-angle: -180;
-        --arm-l1-angle: 45;
-        --arm-l2-angle: -45;
-        --arm-r1-angle: -55;
-        --arm-r2-angle: -75;
-        --leg-l1-angle: -40;
-        --leg-l2-angle:  00;
-        --leg-l3-angle: -90;
-        --leg-r1-angle: +25;
-        --leg-r2-angle: +15;
-        --leg-r3-angle: -90;
+        animation-name: walk-cycle;
+        animation-timing-function: steps(7); /*domyślnie steps,end*/
+        animation-duration: 1s; /* 4 * 5 */
+        animation-iteration-count: 1;
+        animation-play-state: paused;
+        /*animation-delay: -8s;*/
+        animation-fill-mode: forwards;
+      }
+      .frame-01 {
+        animation-delay: calc(-0/4*1s);
+      }
+      .frame-02 {
+        animation-delay: calc(-1/4*1s);
+      }
+      .frame-03 {
+        animation-delay: calc(-2/4*1s);
+      }
+      .frame-04 {
+        animation-delay: calc(-3/4*1s);
+      }
+      .frame-05 {
+        animation-delay: calc(-4/4*1s);
+      }
+
+      .animation {
+        --stroke-width: 10;
+        --dot-size: 4;
 
         --base-animation-time: 1; /* in secounds*/
         --animation-repeat: 4; 
-        --walk-steps: 7; /* Each step in 30px*/
+        --walk-steps: 5; /* Each step in 30px*/
 
-        animation-name: walk3;
-        animation-timing-function: steps(var(--walk-steps)); /*domyślnie steps,end*/
-        animation-duration: calc(var(--base-animation-time) * var(--walk-steps) * 1000ms); /* 4 * 5 */
-        animation-iteration-count: calc(var(--animation-repeat));
+        animation-name: walk-cycle, walk3;
+        animation-timing-function: linear, steps(var(--walk-steps)); /*domyślnie steps,end*/
+        animation-duration: calc(var(--base-animation-time) * 1000ms), calc(var(--base-animation-time) * var(--walk-steps) * 1000ms); /* 4 * 5 */
+        animation-iteration-count: calc(var(--animation-repeat) * var(--walk-steps)), calc(var(--animation-repeat));
         /*animation-delay: -8s;*/
-        animation-fill-mode: forwards;
+        animation-fill-mode: none, forwards;
+        animation-composition: accumulation;
 
         .torso {
           --c: hsla(130,50%,50%,100%);
-          animation-name: walk;
-          /*animation-timing-function: steps(1);*/
-          animation-timing-function: linear;
-          animation-duration: calc(var(--base-animation-time) * 1000ms);
-          animation-iteration-count: calc(var(--animation-repeat) * var(--walk-steps));
-          animation-fill-mode: none;
         }
         .leg1-left {
           /*--c: hsla(130,50%,40%,100%);*/
@@ -377,7 +365,8 @@
     </style>
   </head>
   <body>
-    <div class="canvas front">
+    <div class="canvas frame-all frame-01">
+      <div class="caption">Key frame 1</div>
       <div class="stroke torso">
 
         <div class="stroke leg1-left">
@@ -407,7 +396,261 @@
         </div>
       </div>
     </div>
-    <div class="canvas a2">
+    <div class="canvas">
+      <div class="canvas frame-all frame-02">
+        <div class="caption">Key frame 2</div>
+        <div class="stroke torso">
+
+          <div class="stroke leg1-left">
+            <div class="stroke leg2-left">
+              <div class="stroke leg3-left"></div>
+            </div>
+          </div>
+          
+          <div class="stroke leg1-right">
+            <div class="stroke leg2-right">
+              <div class="stroke leg3-right"></div>
+            </div>
+          </div>
+
+          <div class="stroke arm1-left">
+            <div class="stroke arm2-left">
+            </div>
+          </div>
+
+          <div class="stroke arm1-right">
+            <div class="stroke arm2-right">
+            </div>
+          </div>
+
+          <div class="stroke neck">
+            <div class="circle head"></div>
+          </div>
+        </div>
+      </div>
+      <div class="canvas-absolute frame-all frame-01">
+        <div class="stroke torso">
+
+          <div class="stroke leg1-left">
+            <div class="stroke leg2-left">
+              <div class="stroke leg3-left"></div>
+            </div>
+          </div>
+          
+          <div class="stroke leg1-right">
+            <div class="stroke leg2-right">
+              <div class="stroke leg3-right"></div>
+            </div>
+          </div>
+
+          <div class="stroke arm1-left">
+            <div class="stroke arm2-left">
+            </div>
+          </div>
+
+          <div class="stroke arm1-right">
+            <div class="stroke arm2-right">
+            </div>
+          </div>
+
+          <div class="stroke neck">
+            <div class="circle head"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="canvas">
+      <div class="canvas frame-all frame-03">
+        <div class="caption">Key frame 3</div>
+        <div class="stroke torso">
+
+          <div class="stroke leg1-left">
+            <div class="stroke leg2-left">
+              <div class="stroke leg3-left"></div>
+            </div>
+          </div>
+          
+          <div class="stroke leg1-right">
+            <div class="stroke leg2-right">
+              <div class="stroke leg3-right"></div>
+            </div>
+          </div>
+
+          <div class="stroke arm1-left">
+            <div class="stroke arm2-left">
+            </div>
+          </div>
+
+          <div class="stroke arm1-right">
+            <div class="stroke arm2-right">
+            </div>
+          </div>
+
+          <div class="stroke neck">
+            <div class="circle head"></div>
+          </div>
+        </div>
+      </div>
+      <div class="canvas-absolute frame-all frame-02">
+        <div class="stroke torso">
+
+          <div class="stroke leg1-left">
+            <div class="stroke leg2-left">
+              <div class="stroke leg3-left"></div>
+            </div>
+          </div>
+          
+          <div class="stroke leg1-right">
+            <div class="stroke leg2-right">
+              <div class="stroke leg3-right"></div>
+            </div>
+          </div>
+
+          <div class="stroke arm1-left">
+            <div class="stroke arm2-left">
+            </div>
+          </div>
+
+          <div class="stroke arm1-right">
+            <div class="stroke arm2-right">
+            </div>
+          </div>
+
+          <div class="stroke neck">
+            <div class="circle head"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="canvas">
+      <div class="canvas frame-all frame-04">
+        <div class="caption">Key frame 4</div>
+        <div class="stroke torso">
+
+          <div class="stroke leg1-left">
+            <div class="stroke leg2-left">
+              <div class="stroke leg3-left"></div>
+            </div>
+          </div>
+          
+          <div class="stroke leg1-right">
+            <div class="stroke leg2-right">
+              <div class="stroke leg3-right"></div>
+            </div>
+          </div>
+
+          <div class="stroke arm1-left">
+            <div class="stroke arm2-left">
+            </div>
+          </div>
+
+          <div class="stroke arm1-right">
+            <div class="stroke arm2-right">
+            </div>
+          </div>
+
+          <div class="stroke neck">
+            <div class="circle head"></div>
+          </div>
+        </div>
+      </div>
+      <div class="canvas-absolute frame-all frame-03">
+        <div class="stroke torso">
+
+          <div class="stroke leg1-left">
+            <div class="stroke leg2-left">
+              <div class="stroke leg3-left"></div>
+            </div>
+          </div>
+          
+          <div class="stroke leg1-right">
+            <div class="stroke leg2-right">
+              <div class="stroke leg3-right"></div>
+            </div>
+          </div>
+
+          <div class="stroke arm1-left">
+            <div class="stroke arm2-left">
+            </div>
+          </div>
+
+          <div class="stroke arm1-right">
+            <div class="stroke arm2-right">
+            </div>
+          </div>
+
+          <div class="stroke neck">
+            <div class="circle head"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="canvas">
+      <div class="canvas frame-all frame-05">
+        <div class="caption">Key frame 5 (1 shifted)</div>
+        <div class="stroke torso">
+
+          <div class="stroke leg1-left">
+            <div class="stroke leg2-left">
+              <div class="stroke leg3-left"></div>
+            </div>
+          </div>
+          
+          <div class="stroke leg1-right">
+            <div class="stroke leg2-right">
+              <div class="stroke leg3-right"></div>
+            </div>
+          </div>
+
+          <div class="stroke arm1-left">
+            <div class="stroke arm2-left">
+            </div>
+          </div>
+
+          <div class="stroke arm1-right">
+            <div class="stroke arm2-right">
+            </div>
+          </div>
+
+          <div class="stroke neck">
+            <div class="circle head"></div>
+          </div>
+        </div>
+      </div>
+      <div class="canvas-absolute frame-all frame-04">
+        <div class="stroke torso">
+
+          <div class="stroke leg1-left">
+            <div class="stroke leg2-left">
+              <div class="stroke leg3-left"></div>
+            </div>
+          </div>
+          
+          <div class="stroke leg1-right">
+            <div class="stroke leg2-right">
+              <div class="stroke leg3-right"></div>
+            </div>
+          </div>
+
+          <div class="stroke arm1-left">
+            <div class="stroke arm2-left">
+            </div>
+          </div>
+
+          <div class="stroke arm1-right">
+            <div class="stroke arm2-right">
+            </div>
+          </div>
+
+          <div class="stroke neck">
+            <div class="circle head"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="canvas animation front">
+      <div class="caption">Animation</div>
       <div class="stickname">
         <div class="stroke torso">
 
